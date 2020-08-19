@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  example.api:
+    image: ${DOCKER_REGISTRY-}exampleapi
+    build:
+      context: .
+      dockerfile: Example.Api/Dockerfile
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+        SA_PASSWORD: "$hhIts-a-Secret"
+        ACCEPT_EULA: "Y"
