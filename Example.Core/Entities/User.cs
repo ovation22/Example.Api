@@ -8,6 +8,10 @@ namespace Example.Core.Entities
         [Key] 
         public Guid Id { get; set; }
 
+        public string Name { get; set; } = default!;
+
         public string EmailAddress { get; set; } = default!;
+
+        public string Phone { get; set; } = default!;
     }
 }
