@@ -1,7 +1,9 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Example.Core.Interfaces;
 using Example.Infrastructure.Data;
+using Example.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +44,8 @@ namespace Example.Api
             });
 
             services.AddControllers();
+
+            services.AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

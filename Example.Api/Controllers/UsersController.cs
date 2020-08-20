@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Example.Core.DTOs;
 using Example.Core.Interfaces;
@@ -12,12 +13,15 @@ namespace Example.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _service;
+        private readonly ILoggerAdapter<UsersController> _logger;
 
         public UsersController(
-            IUserService service
+            IUserService service,
+            ILoggerAdapter<UsersController> logger
         )
         {
             _service = service;
+            _logger = logger;
         }
 
         // GET: api/Users/?emailAddress=bill@gates.com
@@ -28,12 +32,22 @@ namespace Example.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(UserResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Get([EmailAddress] string emailAddress)
+        public async Task<IActionResult> Get([EmailAddress][Required] string? emailAddress)
         {
-            var result = await _service.Get(emailAddress);
+            try
+            {
+                var result = await _service.Get(emailAddress);
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+
+            return BadRequest("Unable to return User");
         }
     }
 }
