@@ -25,5 +25,10 @@ namespace Example.Core.Services
                 Id = community.Id
             };
         }
+
+        public Task Create(NewUser user)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

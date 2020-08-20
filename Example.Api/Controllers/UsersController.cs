@@ -49,5 +49,25 @@ namespace Example.Api.Controllers
 
             return BadRequest("Unable to return User");
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Create(NewUser user)
+        {
+            try
+            {
+                await _service.Create(user);
+
+                return Accepted();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+
+            return BadRequest("Unable to create User");
+        }
     }
 }
