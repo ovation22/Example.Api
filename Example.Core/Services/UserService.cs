@@ -23,7 +23,7 @@ namespace Example.Core.Services
 
             if (user is null)
             {
-                throw new UserNotFoundException();
+                throw new UserNotFoundException($"User not found with email address: {emailAddress}");
             }
 
             return MapUserResult(user);
@@ -31,6 +31,13 @@ namespace Example.Core.Services
 
         public async Task<UserResult> Create(NewUser newUser)
         {
+            var existingUser = await _repository.Get<User>(x => x.EmailAddress == newUser.EmailAddress);
+
+            if (existingUser != null)
+            {
+                throw new UserEmailAlreadyCreatedException($"User already exists with email address: {newUser.EmailAddress}");
+            }
+
             var user = new User
             {
                 FirstName = newUser.FirstName,

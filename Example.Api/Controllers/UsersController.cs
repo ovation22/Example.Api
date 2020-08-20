@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Example.Core.DTOs;
+using Example.Core.Exceptions;
 using Example.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -66,6 +67,18 @@ namespace Example.Api.Controllers
                 await _service.Create(user);
 
                 return Accepted();
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (UserEmailAlreadyCreatedException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

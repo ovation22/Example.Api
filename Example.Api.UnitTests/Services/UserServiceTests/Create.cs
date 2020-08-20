@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Example.Core.DTOs;
 using Example.Core.Entities;
@@ -20,10 +18,11 @@ namespace Example.Api.UnitTests.Services.UserServiceTests
         public Create()
         {
             _id = new Guid("B703FC6F-B72D-4048-9FEA-5264A50F8363");
-            _emailAddress = "bill@gates.com";
+            _emailAddress = "steve@gates.com";
             _user = new User
             {
-                Id = _id
+                Id = _id,
+                EmailAddress = "doesn't exist"
             };
             _newUser = new NewUser
             {
@@ -31,6 +30,7 @@ namespace Example.Api.UnitTests.Services.UserServiceTests
             };
 
             Repository.Setup(x => x.Add(It.IsAny<User>())).ReturnsAsync(_user);
+            Repository.Setup(x => x.Get(It.IsAny<Expression<Func<User, bool>>>()));
         }
 
         [Fact]
