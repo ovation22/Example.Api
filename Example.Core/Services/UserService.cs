@@ -31,5 +31,10 @@ namespace Example.Core.Services
                 Id = user.Id
             };
         }
+
+        public Task Create(NewUser user)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
