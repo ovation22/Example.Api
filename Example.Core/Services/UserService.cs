@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Example.Core.DTOs;
 using Example.Core.Entities;
+using Example.Core.Exceptions;
 using Example.Core.Interfaces;
 
 namespace Example.Core.Services
@@ -18,11 +19,16 @@ namespace Example.Core.Services
 
         public async Task<UserResult> Get(string emailAddress)
         {
-            var community = await _repository.Get<User>(x => x.EmailAddress == emailAddress);
+            var user = await _repository.Get<User>(x => x.EmailAddress == emailAddress);
+
+            if (user is null)
+            {
+                throw new UserNotFoundException();
+            }
 
             return new UserResult
             {
-                Id = community.Id
+                Id = user.Id
             };
         }
     }
