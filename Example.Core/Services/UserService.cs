@@ -26,32 +26,31 @@ namespace Example.Core.Services
                 throw new UserNotFoundException();
             }
 
-            return new UserResult
-            {
-                Id = user.Id,
-                EmailAddress = user.EmailAddress,
-                Name = user.Name,
-                Phone = user.Phone
-            };
+            return MapUserResult(user);
         }
 
         public async Task<UserResult> Create(NewUser newUser)
         {
             var user = new User
             {
-                Name = newUser.Name,
+                FirstName = newUser.FirstName,
+                MiddleName = newUser.MiddleName,
+                LastName = newUser.LastName,
                 Phone = newUser.Phone,
                 EmailAddress = newUser.EmailAddress
             };
 
-            var userResult = await _repository.Add(user);
+            return MapUserResult(await _repository.Add(user));
+        }
 
+        private static UserResult MapUserResult(User user)
+        {
             return new UserResult
             {
-                Id = userResult.Id,
-                EmailAddress = userResult.EmailAddress,
-                Name = userResult.Name,
-                Phone = userResult.Phone
+                Id = user.Id,
+                EmailAddress = user.EmailAddress,
+                Name = $"{user.FirstName} {user.MiddleName} {user.LastName}",
+                Phone = user.Phone
             };
         }
     }

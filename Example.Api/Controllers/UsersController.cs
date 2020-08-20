@@ -34,7 +34,7 @@ namespace Example.Api.Controllers
         [ProducesResponseType(typeof(UserResult), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Get([EmailAddress][Required] string? emailAddress)
+        public async Task<IActionResult> Get([EmailAddress][Required(AllowEmptyStrings = false)] string emailAddress)
         {
             try
             {
@@ -50,6 +50,11 @@ namespace Example.Api.Controllers
             return BadRequest("Unable to return User");
         }
 
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
