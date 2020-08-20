@@ -4,14 +4,20 @@ namespace Example.Core.DTOs
 {
     public class NewUser
     {
-        [Required]
-        public string? Name { get; set; }
+        [Required(AllowEmptyStrings = false)]
+        public string FirstName { get; set; } = default!;
 
-        [Required]
-        public string? Phone { get; set; }
+        [Required(AllowEmptyStrings = false)]
+        public char MiddleName { get; set; } = default!;
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
+        public string LastName { get; set; } = default!;
+
+        [Required(AllowEmptyStrings = false)]
+        public string Phone { get; set; } = default!;
+
         [EmailAddress]
-        public string? EmailAddress { get; set; }
+        [Required(AllowEmptyStrings = false)]
+        public string EmailAddress { get; set; } = default!;
     }
 }

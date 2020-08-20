@@ -10,6 +10,6 @@ namespace Example.Core.DTOs
 
         public string Phone { get; set; } = default!;
 
-        public string EmailAddress { get; set; } = default;
+        public string EmailAddress { get; set; } = default!;
     }
 }
