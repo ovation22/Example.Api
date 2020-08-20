@@ -44,6 +44,9 @@ namespace Example.Api
                 c.IncludeXmlComments(xmlPath);
             });
 
+            services.AddHealthChecks()
+                .AddSqlServer(Configuration.GetConnectionString("Default"));
+
             services.AddControllers();
 
             services.AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
@@ -76,6 +79,8 @@ namespace Example.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseHealthChecks("/health");
         }
     }
 }
