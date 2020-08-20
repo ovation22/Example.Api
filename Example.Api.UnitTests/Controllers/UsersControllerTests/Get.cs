@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -8,11 +7,11 @@ namespace Example.Api.UnitTests.Controllers.UsersControllerTests
 {
     public class Get : UsersControllerTestBase
     {
-        private readonly Guid _id;
+        private readonly string _emailAddress;
 
         public Get()
         {
-            _id = new Guid("2A1F63DE-E76C-4CBD-9B21-B40ABF729490");
+            _emailAddress = "bill@gates.com";
         }
 
         [Fact]
@@ -20,7 +19,7 @@ namespace Example.Api.UnitTests.Controllers.UsersControllerTests
         {
             // Arrange
             // Act
-            var result = await Controller.Get(_id);
+            var result = await Controller.Get(_emailAddress);
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
@@ -31,10 +30,10 @@ namespace Example.Api.UnitTests.Controllers.UsersControllerTests
         {
             // Arrange
             // Act
-            await Controller.Get(_id);
+            await Controller.Get(_emailAddress);
 
             // Assert
-            UserService.Verify(x => x.Get(_id), Times.Once());
+            UserService.Verify(x => x.Get(_emailAddress), Times.Once());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Example.Core.DTOs;
 using Example.Core.Interfaces;
@@ -20,18 +20,18 @@ namespace Example.Api.Controllers
             _service = service;
         }
 
-        // GET: api/Users/5
+        // GET: api/Users/?emailAddress=bill@gates.com
         /// <summary>
-        /// Get a user by their UserId
+        /// Get a user by their email address
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="emailAddress"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet]
         [ProducesResponseType(typeof(UserResult), StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([EmailAddress] string emailAddress)
         {
-            var result = await _service.Get(id);
+            var result = await _service.Get(emailAddress);
 
             return Ok(result);
         }
