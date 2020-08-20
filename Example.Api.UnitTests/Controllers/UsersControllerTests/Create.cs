@@ -24,7 +24,7 @@ namespace Example.Api.UnitTests.Controllers.UsersControllerTests
             var result = await Controller.Create(_newUser);
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<AcceptedResult>(result);
         }
 
         [Fact]

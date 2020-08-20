@@ -28,13 +28,31 @@ namespace Example.Core.Services
 
             return new UserResult
             {
-                Id = user.Id
+                Id = user.Id,
+                EmailAddress = user.EmailAddress,
+                Name = user.Name,
+                Phone = user.Phone
             };
         }
 
-        public Task Create(NewUser user)
+        public async Task<UserResult> Create(NewUser newUser)
         {
-            throw new System.NotImplementedException();
+            var user = new User
+            {
+                Name = newUser.Name,
+                Phone = newUser.Phone,
+                EmailAddress = newUser.EmailAddress
+            };
+
+            var userResult = await _repository.Add(user);
+
+            return new UserResult
+            {
+                Id = userResult.Id,
+                EmailAddress = userResult.EmailAddress,
+                Name = userResult.Name,
+                Phone = userResult.Phone
+            };
         }
     }
 }

@@ -6,6 +6,6 @@ namespace Example.Core.Interfaces
     public interface IUserService
     {
         Task<UserResult> Get(string emailAddress);
-        Task Create(NewUser user);
+        Task<UserResult> Create(NewUser user);
     }
 }
