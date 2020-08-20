@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Example.Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +35,10 @@ namespace Example.Api
                     Title = "Example",
                     Description = "A RESTful API",
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddControllers();
